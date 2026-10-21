@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1c1a24">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Medi">
+<meta name="robots" content="noindex">
+<title>Medi</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <section id="home">
+    <img class="logo" src="icon.svg" alt="" width="64" height="64">
+    <h1>Medi</h1>
+    <div class="choices" id="choices"></div>
+    <p class="hint">Có thể khoá màn hình. Chuông vẫn reo.</p>
+  </section>
+
+  <section id="run" hidden>
+    <p class="title" id="run-title"></p>
+    <div class="ring">
+      <svg viewBox="0 0 200 200" aria-hidden="true">
+        <circle class="track" cx="100" cy="100" r="90"/>
+        <circle class="bar" id="bar" cx="100" cy="100" r="90"/>
+        <g id="marks"></g>
+      </svg>
+      <div class="time" id="time" aria-live="off">0:00</div>
+    </div>
+    <p class="next" id="next" aria-live="polite"></p>
+    <div class="buttons" id="run-buttons">
+      <button type="button" class="soft" id="pause">Tạm dừng</button>
+      <button type="button" class="soft" id="stop">Dừng</button>
+    </div>
+    <div class="ask" id="ask-stop" hidden>
+      <p>Dừng buổi thiền này?</p>
+      <div class="buttons">
+        <button type="button" class="soft" id="stop-yes">Dừng</button>
+        <button type="button" class="soft" id="stop-no">Ngồi tiếp</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="done" hidden>
+    <img class="logo" src="icon.svg" alt="" width="64" height="64">
+    <p class="done-text" id="done-text"></p>
+    <p class="haba-note" id="haba-note" aria-live="polite"></p>
+    <button type="button" class="soft" id="back">Về trang đầu</button>
+  </section>
+</main>
+<audio id="player" preload="none"></audio>
+<script type="module" src="app.js"></script>
+</body>
+</html>

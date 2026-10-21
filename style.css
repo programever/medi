@@ -1,0 +1,58 @@
+:root {
+  --bg: #1c1a24;
+  --card: #2a2733;
+  --text: #f1ecf2;
+  --muted: #a49cae;
+  --rose: #c9668b;
+  --rose-dark: #a8476b;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text); }
+body {
+  font: 18px/1.5 -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
+  min-height: 100dvh;
+  padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom);
+  -webkit-tap-highlight-color: transparent;
+}
+main { max-width: 420px; margin: 0 auto; }
+section { display: flex; flex-direction: column; align-items: center; padding-top: 48px; }
+[hidden] { display: none !important; }
+.logo { border-radius: 14px; }
+h1 { font-size: 28px; font-weight: 600; margin: 12px 0 28px; letter-spacing: .5px; }
+
+.choices { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+.choice {
+  width: 100%; border: 0; border-radius: 18px; padding: 20px 22px;
+  background: var(--card); color: var(--text); text-align: left; cursor: pointer;
+  display: flex; flex-direction: column; gap: 2px; font: inherit;
+}
+.choice:active { background: var(--rose-dark); }
+.choice .label { font-size: 26px; font-weight: 600; }
+.choice .note { color: var(--muted); font-size: 15px; }
+.hint { color: var(--muted); font-size: 15px; margin-top: 28px; text-align: center; }
+
+.title { color: var(--muted); margin: 0 0 20px; font-size: 17px; }
+.ring { position: relative; width: min(78vw, 320px); aspect-ratio: 1; }
+.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring circle { fill: none; stroke-width: 6; }
+.ring .track { stroke: var(--card); }
+.ring .bar { stroke: var(--rose); stroke-linecap: round; transition: stroke-dashoffset .4s linear; }
+.ring .mark { fill: var(--muted); }
+.ring .mark.past { fill: var(--rose); }
+.time {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-size: clamp(44px, 15vw, 64px); font-weight: 300; font-variant-numeric: tabular-nums;
+}
+.next { color: var(--muted); min-height: 1.5em; margin: 20px 0 8px; text-align: center; }
+.buttons { display: flex; gap: 14px; margin-top: 18px; }
+.soft {
+  border: 0; border-radius: 999px; padding: 12px 26px; font: inherit; font-size: 17px;
+  background: var(--card); color: var(--text); cursor: pointer;
+}
+.soft:active { background: var(--rose-dark); }
+.done-text { font-size: 22px; text-align: center; margin: 24px 0 8px; }
+.haba-note { color: var(--muted); font-size: 15px; text-align: center; margin: 0 0 28px; min-height: 1.5em; }
+.ask { display: flex; flex-direction: column; align-items: center; margin-top: 18px; }
+.ask p { margin: 0; }
+.ask .buttons { margin-top: 12px; }
