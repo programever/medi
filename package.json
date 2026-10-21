@@ -1,0 +1,21 @@
+{
+  "name": "medi",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Medi: a meditation timer with bells. 10 minutes, 30 minutes or 1 hour.",
+  "type": "module",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "test": "npm run check && node --test test/sessions.test.ts",
+    "build": "node build.mjs",
+    "sounds": "node tools/make-sounds.ts",
+    "test:browser": "node --test test/browser.test.ts",
+    "serve": "python3 -m http.server 8767 --bind 127.0.0.1 --directory dist"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "esbuild": "^0.25.0",
+    "playwright": "1.63.0",
+    "typescript": "^5.9.0"
+  }
+}
