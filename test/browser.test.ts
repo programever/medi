@@ -1,6 +1,7 @@
 // Test of the whole page in a headless browser. It starts the 30-minute session, checks that the
 // sound plays and the time goes down, pauses and goes on, then jumps near the end and checks the
 // end bell, the "done" screen and the Haba mark (to a fake Haba). It also takes phone-size pictures into test-shots/.
+// The clock is set to day 4 of the 30-day plan (15 November 2026); the fake Haba has Meditate on day 1 and 3.
 // Build first (npm run build), then: npm run test:browser
 // To test the live site instead: MEDI_URL=https://programever.github.io/medi/ npm run test:browser
 import { test } from 'node:test';
@@ -49,7 +50,8 @@ test('a 30-minute session from start to done', async () => {
   let browser: Browser | null = null;
   try {
     browser = await chromium.launch({ args: ['--autoplay-policy=no-user-gesture-required'] });
-    const page = await (await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 })).newPage();
+    const page = await (await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, timezoneId: 'Asia/Ho_Chi_Minh' })).newPage();
+    await page.clock.setFixedTime(new Date('2026-11-15T10:00:00+07:00'));
     const errors: string[] = [];
     page.on('pageerror', (e) => errors.push(String(e)));
     page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
@@ -57,14 +59,33 @@ test('a 30-minute session from start to done', async () => {
     const habaWrites: string[] = [];
     await page.route('https://firestore.googleapis.com/**', async (route) => {
       const req = route.request();
-      if (req.url().includes(':runQuery')) return route.fulfill({ json: [{ readTime: 'x' }] });
+      if (req.url().includes(':runQuery')) {
+        const old = ['2026-11-12T20:00:00+07:00', '2026-11-14T06:30:00+07:00'];
+        return route.fulfill({ json: old.map((t) => ({ document: { name: 'x', fields: { t: { stringValue: t } } } })) });
+      }
       habaWrites.push(req.postDataJSON().fields.item.stringValue);
       return route.fulfill({ json: {} });
     });
 
     await page.goto(url);
     assert.deepEqual(await page.locator('.choice .label').allTextContents(), ['10 phút', '30 phút', '1 giờ']);
-    await page.screenshot({ path: 'test-shots/home.png' });
+    assert.equal(await page.textContent('#dayno'), 'Ngày 4 / 30');
+    assert.equal(await page.textContent('#today-min'), 'Hôm nay: 0 / 30 phút');
+    await page.waitForFunction(() => document.getElementById('cal-sum')!.textContent === 'Đã đủ 30 phút: 2 ngày.', null, { timeout: 10000 });
+    assert.equal(await page.locator('#cal .c').count(), 30);
+    assert.deepEqual(await page.locator('#cal .c').evaluateAll((els) => els.slice(0, 5).map((e) => e.className)),
+      ['c st-done', 'c st-missed', 'c st-done', 'c st-open today', 'c st-future']);
+    await page.screenshot({ path: 'test-shots/home.png', fullPage: true });
+
+    // A short stopped session counts its minutes, but 10 minutes are not enough for Haba.
+    await page.click('[data-session="10"]');
+    await page.waitForFunction(() => (document.getElementById('player') as HTMLAudioElement).currentTime > 0.5, null, { timeout: 20000 });
+    await page.evaluate(() => { (document.getElementById('player') as HTMLAudioElement).currentTime = 400; });
+    await page.waitForFunction(() => (document.getElementById('player') as HTMLAudioElement).currentTime >= 400, null, { timeout: 10000 });
+    await page.click('#stop');
+    await page.click('#stop-yes');
+    assert.equal(await page.textContent('#today-min'), 'Hôm nay: 6 / 30 phút');
+    assert.deepEqual(habaWrites, []);
 
     await page.click('[data-session="30"]');
     await page.waitForFunction(() => (document.getElementById('player') as HTMLAudioElement).currentTime > 1.5, null, { timeout: 20000 });
@@ -97,11 +118,14 @@ test('a 30-minute session from start to done', async () => {
     assert.equal(await page.textContent('#time'), '0:00');
     await page.waitForSelector('#done:not([hidden])', { timeout: 30000 });
     assert.equal(await page.textContent('#done-text'), 'Xong. Bạn đã ngồi 30 phút.');
+    assert.equal(await page.textContent('#day-note'), 'Hôm nay: 36 phút. Đã đủ 30 phút.');
     await page.waitForFunction(() => document.getElementById('haba-note')!.textContent!.startsWith('Đã đánh dấu'), null, { timeout: 10000 });
     assert.deepEqual(habaWrites, ['meditate']);
     await page.screenshot({ path: 'test-shots/done.png' });
     await page.click('#back');
     assert.equal(await page.isVisible('#home'), true);
+    assert.equal(await page.textContent('#today-min'), 'Hôm nay: 36 phút. Đã đủ ✓');
+    assert.equal(await page.getAttribute('#cal .today', 'class'), 'c st-done today');
 
     // Stop in the middle: back to the first screen, no sound.
     await page.click('[data-session="10"]');
@@ -115,7 +139,7 @@ test('a 30-minute session from start to done', async () => {
     await page.click('#stop-yes');
     assert.equal(await page.isVisible('#home'), true);
     assert.equal(await page.evaluate(() => (document.getElementById('player') as HTMLAudioElement).paused), true);
-    assert.deepEqual(habaWrites, ['meditate'], 'a stopped session does not mark Haba');
+    assert.deepEqual(habaWrites, ['meditate'], 'Haba is marked once per day');
 
     assert.deepEqual(errors, []);
   } finally {

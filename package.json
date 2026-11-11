@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "check": "tsc --noEmit",
-    "test": "npm run check && node --test test/sessions.test.ts",
+    "test": "npm run check && node --test test/sessions.test.ts test/plan.test.ts",
     "build": "node build.mjs",
     "sounds": "node tools/make-sounds.ts",
     "test:browser": "node --test test/browser.test.ts",

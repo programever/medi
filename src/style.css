@@ -5,6 +5,7 @@
   --muted: #a49cae;
   --rose: #c9668b;
   --rose-dark: #a8476b;
+  --line: #3d3947;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -56,3 +57,32 @@ h1 { font-size: 28px; font-weight: 600; margin: 12px 0 28px; letter-spacing: .5p
 .ask { display: flex; flex-direction: column; align-items: center; margin-top: 18px; }
 .ask p { margin: 0; }
 .ask .buttons { margin-top: 12px; }
+
+/* ---- 30-day plan ---- */
+.plan { width: 100%; text-align: center; margin: -12px 0 22px; }
+.plan p { margin: 0; }
+.dayno { font-size: 20px; font-weight: 700; color: var(--rose); }
+.today-min { color: var(--text); margin-top: 2px !important; }
+.pbar { height: 8px; border-radius: 4px; background: var(--card); overflow: hidden; margin: 10px auto 0; max-width: 260px; }
+.pbar div { height: 100%; width: 0; background: var(--rose); border-radius: 4px; }
+.home-note, .day-note { color: var(--muted); font-size: 15px; min-height: 0; }
+.home-note:not(:empty) { margin-top: 8px !important; }
+.day-note { text-align: center; margin: 0 0 8px; }
+.cal-wrap { width: 100%; margin-top: 36px; padding-bottom: 32px; }
+.cal-wrap h2 { font-size: 19px; font-weight: 600; margin: 0 0 2px; }
+.cal-sum { color: var(--muted); font-size: 15px; margin: 0 0 10px; }
+.cal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.cal .wd { text-align: center; font-size: 13px; font-weight: 600; color: var(--muted); }
+.cal .c { position: relative; aspect-ratio: 1; min-height: 40px; border-radius: 10px; border: 1px solid var(--line);
+  display: grid; place-items: center; font-size: 16px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+.cal .c .mo { position: absolute; top: 2px; left: 4px; font-size: 10px; }
+.cal .st-done { background: var(--rose); border-color: var(--rose); color: #fff; }
+.cal .st-missed { background: var(--card); border-color: var(--card); }
+.cal .st-open { color: var(--text); }
+.cal .today { border: 3px solid var(--text); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 14px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend .sw { width: 14px; height: 14px; border-radius: 4px; border: 1px solid var(--line); }
+.legend .sw.st-done { background: var(--rose); border-color: var(--rose); }
+.legend .sw.st-missed { background: var(--card); border-color: var(--card); }
+.legend .sw.st-open { border: 3px solid var(--text); }

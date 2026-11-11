@@ -19,8 +19,23 @@
   <section id="home">
     <img class="logo" src="icon.svg" alt="" width="64" height="64">
     <h1>Medi</h1>
+    <div class="plan">
+      <p class="dayno" id="dayno"></p>
+      <p class="today-min" id="today-min"></p>
+      <div class="pbar" id="pbar" aria-hidden="true"><div id="pbar-fill"></div></div>
+      <p class="home-note" id="home-note" aria-live="polite"></p>
+    </div>
     <div class="choices" id="choices"></div>
     <p class="hint">Có thể khoá màn hình. Chuông vẫn reo.</p>
+    <div class="cal-wrap">
+      <h2>30 ngày thiền</h2>
+      <p class="cal-sum" id="cal-sum"></p>
+      <div class="cal" id="cal"></div>
+      <div class="legend">
+        <span><i class="sw st-done"></i>Đủ 30 phút</span><span><i class="sw st-open"></i>Hôm nay</span>
+        <span><i class="sw st-missed"></i>Chưa đủ</span>
+      </div>
+    </div>
   </section>
 
   <section id="run" hidden>
@@ -50,6 +65,7 @@
   <section id="done" hidden>
     <img class="logo" src="icon.svg" alt="" width="64" height="64">
     <p class="done-text" id="done-text"></p>
+    <p class="day-note" id="day-note"></p>
     <p class="haba-note" id="haba-note" aria-live="polite"></p>
     <button type="button" class="soft" id="back">Về trang đầu</button>
   </section>

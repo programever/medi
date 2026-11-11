@@ -22,6 +22,23 @@ the page says "Xong" (done).
 
 You can lock the phone. The bells still ring.
 
+## The 30-day plan
+
+Iker, 2026-11-11: "Tomorrow I will also start meditation, minimum 30 minutes a
+day for the next 30 days." Day 1 is Thursday 12 November 2026, day 30 is
+Friday 11 December. A day starts at 4 in the morning, like Haba. The code is
+in `src/plan.ts`.
+
+- The first screen says "Ngày 4 / 30" and "Hôm nay: 12 / 30 phút", with a bar.
+- All the minutes of a day add up: three sessions of 10 minutes make 30. A
+  stopped session counts the minutes it played. The minutes are kept on the
+  phone (browser storage), only for today.
+- When the day reaches 30 minutes, Medi marks Meditate in Haba.
+- A calendar shows the 30 days. Rose: a day with 30 minutes. Grey: a past day
+  without. Today has a white border. The calendar reads the Meditate marks in
+  Haba, so a day that Iker marks by hand in Haba also counts.
+- No new data and no rules change: the plan uses only Haba's records.
+
 ## How it works, and why
 
 An iPhone stops the timers of a web page when the screen is locked. But it
@@ -43,8 +60,9 @@ There is no server, no login and no saved data.
 
 ## Haba mark
 
-When a session ends with the end bell, Medi marks Meditate in Haba, Iker's
-habit page (Iker, 2026-10-21). A stopped session does not. Haba allows one mark
+Medi marks Meditate in Haba, Iker's habit page, when the day has 30 minutes of
+meditation (since the 30-day plan, 2026-11-11). Before that, every full session
+marked it (Iker, 2026-10-21). Haba allows one mark
 per day, so two sessions on one day give one mark. The done screen says if it
 worked. The code is `src/haba-mark.ts`, a copy of `haba/shared/haba-mark.ts`.
 The browser test fakes Haba, so it never writes to Iker's real data.
