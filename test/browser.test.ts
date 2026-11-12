@@ -51,7 +51,7 @@ test('a 30-minute session from start to done', async () => {
   try {
     browser = await chromium.launch({ args: ['--autoplay-policy=no-user-gesture-required'] });
     const page = await (await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, timezoneId: 'Asia/Ho_Chi_Minh' })).newPage();
-    await page.clock.setFixedTime(new Date('2026-11-15T10:00:00+07:00'));
+    await page.clock.setFixedTime(new Date('2026-11-19T10:00:00+07:00'));
     const errors: string[] = [];
     page.on('pageerror', (e) => errors.push(String(e)));
     page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
@@ -60,7 +60,7 @@ test('a 30-minute session from start to done', async () => {
     await page.route('https://firestore.googleapis.com/**', async (route) => {
       const req = route.request();
       if (req.url().includes(':runQuery')) {
-        const old = ['2026-11-12T20:00:00+07:00', '2026-11-14T06:30:00+07:00'];
+        const old = ['2026-11-16T20:00:00+07:00', '2026-11-18T06:30:00+07:00'];
         return route.fulfill({ json: old.map((t) => ({ document: { name: 'x', fields: { t: { stringValue: t } } } })) });
       }
       habaWrites.push(req.postDataJSON().fields.item.stringValue);

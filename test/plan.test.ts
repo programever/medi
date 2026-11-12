@@ -3,25 +3,26 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import * as P from '../src/plan.ts';
 
-test('30 days from Thursday 12 November, 30 minutes a day', () => {
+test('30 days from Monday 16 November, 30 minutes a day', () => {
   assert.equal(P.DAYS, 30);
   assert.equal(P.GOAL_MIN, 30);
-  assert.equal(P.dayOf(1), '2026-11-12');
-  assert.equal(P.dayOf(30), '2026-12-11');
-  assert.equal(P.dayNumber('2026-11-11'), 0);
-  assert.equal(P.dayNumber('2026-12-01'), 20);
-  assert.equal(P.dayName('2026-11-12'), 'Thứ Năm 12/11');
+  assert.equal(P.dayOf(1), '2026-11-16');
+  assert.equal(P.dayOf(30), '2026-12-15');
+  assert.equal(P.dayNumber('2026-11-15'), 0);
+  assert.equal(P.dayNumber('2026-12-05'), 20);
+  assert.equal(P.dayName('2026-11-16'), 'Thứ Hai 16/11');
+  assert.equal(P.dm(P.dayOf(30)), '15/12');
   assert.equal(P.weekday('2026-11-16'), 0, 'Monday');
 });
 
 test('calendar: done, missed, today, to come', () => {
-  const done = new Set(['2026-11-12', '2026-11-14', '2026-11-01']);
-  const cal = P.calendar(done, '2026-11-15');
+  const done = new Set(['2026-11-16', '2026-11-18', '2026-11-01']);
+  const cal = P.calendar(done, '2026-11-19');
   assert.equal(cal.length, 30);
   assert.deepEqual(cal.slice(0, 5).map(c => c.state), ['done', 'missed', 'done', 'open', 'future']);
   assert.ok(cal[3]!.today);
-  assert.equal(P.calendar(new Set(['2026-11-15']), '2026-11-15')[3]!.state, 'done', 'today with 30 minutes');
-  assert.ok(P.calendar(new Set(), '2026-11-11').every(c => c.state === 'future'), 'before the start');
+  assert.equal(P.calendar(new Set(['2026-11-19']), '2026-11-19')[3]!.state, 'done', 'today with 30 minutes');
+  assert.ok(P.calendar(new Set(), '2026-11-15').every(c => c.state === 'future'), 'before the start');
 });
 
 test('minutes add up over the day, a new day starts from 0', () => {

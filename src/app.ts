@@ -197,7 +197,7 @@ function renderPlan() {
 
   const cells = P.calendar(doneDays, today);
   const doneCount = cells.filter((c) => c.state === 'done').length;
-  $('cal-sum').textContent = n < 1 ? 'Từ 12/11 đến 11/12.' : `Đã đủ ${P.GOAL_MIN} phút: ${doneCount} ngày.`;
+  $('cal-sum').textContent = n < 1 ? `Từ ${P.dm(P.dayOf(1))} đến ${P.dm(P.dayOf(P.DAYS))}.` : `Đã đủ ${P.GOAL_MIN} phút: ${doneCount} ngày.`;
   let html = P.WEEKDAYS_SHORT.map((w) => `<span class="wd">${w}</span>`).join('') + '<span></span>'.repeat(P.weekday(P.START));
   for (const c of cells) {
     const [, m, d] = c.day.split('-').map(Number);
