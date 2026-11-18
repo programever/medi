@@ -1,5 +1,6 @@
 // The 30-day meditation plan (Iker, 2026-11-11: "tomorrow I will also start meditation, minimum 30 minutes
-// a day for the next 30 days"). Day 1 is Monday 16 November 2026 (Iker, 2026-11-12: moved from Thursday 12 November to the next Monday).
+// a day for the next 30 days"). Day 1 is Monday 7 December 2026 (Iker, 2026-11-18: moved from Monday 16 November;
+// before that, on 2026-11-12, from Thursday 12 November).
 // A day starts at 04:00, like Haba.
 //
 // How a day counts: Medi adds up the minutes of every session of the day, finished or stopped, on this phone.
@@ -7,7 +8,7 @@
 // so a day Iker marks by hand in Haba (meditation without Medi) is green too. No new data, no rules change.
 // No browser things in here, so it can be tested with node (see test/plan.test.ts).
 
-export const START = '2026-11-16';
+export const START = '2026-12-07';
 export const DAYS = 30;
 export const GOAL_MIN = 30;
 
@@ -32,13 +33,13 @@ export function weekday(day: string): number { return (new Date(utcOf(day)).getU
 const WEEKDAYS = ['Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy', 'Chủ Nhật'];
 export const WEEKDAYS_SHORT = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
 
-/** "16/11" */
+/** "7/12" */
 export function dm(day: string): string {
   const [, m, d] = day.split('-').map(Number);
   return `${d}/${m}`;
 }
 
-/** "Thứ Hai 16/11" */
+/** "Thứ Hai 7/12" */
 export function dayName(day: string): string { return `${WEEKDAYS[weekday(day)]} ${dm(day)}`; }
 
 /** done: 30 minutes (a Meditate mark in Haba). open: today, not yet. missed: a past day without. future: to come. */
