@@ -25,10 +25,10 @@ You can lock the phone. The bells still ring.
 ## The 30-day plan
 
 Iker, 2026-11-11: "Tomorrow I will also start meditation, minimum 30 minutes a
-day for the next 30 days." Day 1 is Monday 7 December 2026, day 30 is
-Tuesday 5 January 2027. (Iker moved the start two times: on 2026-11-12 from
-Thursday 12 November to Monday 16 November, and on 2026-11-18 to Monday
-7 December.) A day starts at 4 in the morning, like Haba. The code is
+day for the next 30 days." Day 1 is Saturday 21 November 2026, day 30 is
+Sunday 20 December 2026. (Iker moved the start three times: on 2026-11-12 from
+Thursday 12 November to Monday 16 November, on 2026-11-18 to Monday
+7 December, and on 2026-11-20 to Saturday 21 November.) A day starts at 4 in the morning, like Haba. The code is
 in `src/plan.ts`.
 
 - The first screen says "Ngày 4 / 30" and "Hôm nay: 12 / 30 phút", with a bar.
