@@ -1,6 +1,6 @@
 // The 30-day meditation plan (Iker, 2026-11-11: "tomorrow I will also start meditation, minimum 30 minutes
-// a day for the next 30 days"). Day 1 is Saturday 21 November 2026 (Iker, 2026-11-20: moved from Monday 7 December;
-// before that, on 2026-11-18 from Monday 16 November, and on 2026-11-12 from Thursday 12 November).
+// a day for the next 30 days"). Day 1 is Monday 23 November 2026 (Iker, 2026-11-22: moved from Saturday 21 November;
+// on 2026-11-20 from Monday 7 December, on 2026-11-18 from Monday 16 November, and on 2026-11-12 from Thursday 12 November).
 // A day starts at 04:00, like Haba.
 //
 // How a day counts: Medi adds up the minutes of every session of the day, finished or stopped, on this phone.
@@ -8,7 +8,7 @@
 // so a day Iker marks by hand in Haba (meditation without Medi) is green too. No new data, no rules change.
 // No browser things in here, so it can be tested with node (see test/plan.test.ts).
 
-export const START = '2026-11-21';
+export const START = '2026-11-23';
 export const DAYS = 30;
 export const GOAL_MIN = 30;
 
